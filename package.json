@@ -24,5 +24,6 @@
   },
   "appFlags": {
     "writeLogsToFiles": "true"
-  }
+  },
+  "license": "MIT"
 }
