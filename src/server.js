@@ -33,10 +33,10 @@ function requestHandler(req, res) {
                 facebookAccessToken: fs.readFileSync(`${__dirname.split('dist')[0]}facebook-access-token.txt`, 'utf8')
             };
 
-            setUserProfile(originalIncomingObjectFromApiAi, config).then(() => {
+            // setUserProfile(originalIncomingObjectFromApiAi, config).then(() => {
                 const customResponseObject = handleRequest(originalIncomingObjectFromApiAi);
                 res.end(JSON.stringify(getResponseObjectForApiAi(customResponseObject, originalIncomingObjectFromApiAi)));
-            })
+            // });
         });
     }
 
