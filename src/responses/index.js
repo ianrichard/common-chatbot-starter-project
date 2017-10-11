@@ -10,15 +10,15 @@ export default function getResponses() {
             return [
                 {
                     type: 'text',
-                    message: `Hey there! This is a guided tour of the features for the chatbot starter project on github.com/ianrichard.`
+                    message: 'Hey there! This is a guided tour of common components between Facebook Messenger and Google Assistant.'
                 },
                 {
                     type: 'text',
-                    message: `I'm available as "Demo Chatbot" on both Facebook Messenger and Google Assistant.`
+                    message: 'You can start coding the sample project at github.com/ianrichard.'
                 },
                 {
                     type: 'simple-responses',
-                    values: ['Sweet!', 'Get the show on the road!']
+                    values: ['Sweet!', 'Show me stuff!']
                 }
             ]
         },
@@ -26,7 +26,7 @@ export default function getResponses() {
             return [
                 {
                     type: 'text',
-                    message: `Images (especially animated GIFs) are always fun to add to the mix!`
+                    message: 'Animated GIFs are always fun to add to the mix!'
                 },
                 {
                     type: 'image',
@@ -43,13 +43,16 @@ export default function getResponses() {
             return [
                 {
                     type: 'text',
-                    message: `Absolutely!`
+                    message: 'Absolutely!'
+                },
+                {
+                    type: 'text',
+                    message: 'Named for a winding stretch of Hill Country highway, Devil’s Backbone is a Belgian-style tripel. Featuring a beautiful pale-golden color, this ale’s spicy hops and Belgian yeast work together to create a distinctive flavor and aroma. Don’t let the light color fool you, this one has a dark side too. Traditional Belgian brewing techniques add strength without increasing heaviness.'
                 },
                 {
                     type: 'card',
                     title: 'Devil’s Backbone',
                     subTitle: 'Belgian-Style Tripel',
-                    body: 'Named for a winding stretch of Hill Country highway, Devil’s Backbone is a Belgian-style tripel. Featuring a beautiful pale-golden color, this ale’s spicy hops and Belgian yeast work together to create a distinctive flavor and aroma. Don’t let the light color fool you, this one has a dark side too. Traditional Belgian brewing techniques add strength without increasing heaviness.',
                     image: {
                         url: 'https://realalebrewing.com/wp-content/uploads/2015/01/Devils-Backbone-bottle-and-can-web-photography-final-700x550.png',
                         accessibilityText: 'Ice cold beer.'
@@ -70,11 +73,11 @@ export default function getResponses() {
             return [
                 {
                     type: 'text',
-                    message: `Absolutely!`
+                    message: 'Absolutely!'
                 },
                 {
                     type: 'text',
-                    message: `Who’s your favorite GOT character!?`
+                    message: 'Who’s your favorite GOT character!?'
                 },
                 {
                     type: 'list',
@@ -97,12 +100,6 @@ export default function getResponses() {
                             subTitle: 'Jon Snow',
                             imageUrl: 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTA2NTI0NjYxMTBeQTJeQWpwZ15BbWU3MDIxMjgyNzY@._V1_UX214_CR0,0,214,317_AL_.jpg',
                             facebookButtonTitle: 'Select'
-                        },
-                        {
-                            title: 'Kristian Nairn',
-                            subTitle: 'Hodor',
-                            imageUrl: 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTkwMzI5MzE5MV5BMl5BanBnXkFtZTcwMTkzOTc3OQ@@._V1_UY317_CR20,0,214,317_AL_.jpg',
-                            facebookButtonTitle: 'Select'
                         }
                     ]
                 },
@@ -116,7 +113,7 @@ export default function getResponses() {
             return [
                 {
                     type: 'text',
-                    message: `Sideways list === carousel!`
+                    message: 'Who’s your least favorite GOT character?'
                 },
                 {
                     type: 'carousel',
