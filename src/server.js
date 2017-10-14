@@ -27,7 +27,7 @@ function requestHandler(req, res) {
             const originalIncomingObjectFromDialogflow = JSON.parse(responseBody);
 
             // useful for seeing what comes back from api.ai
-            logJsonToFile('original-incoming-api-ai-data', originalIncomingObjectFromDialogflow);
+            logJsonToFile('original-incoming-dialogflow-data', originalIncomingObjectFromDialogflow);
 
             const config = {
                 facebookAccessToken: fs.readFileSync(`${__dirname.split('dist')[0]}facebook-access-token.txt`, 'utf8')

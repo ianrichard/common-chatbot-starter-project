@@ -11,8 +11,8 @@ This will take a little while :)
 ## Run Your Local Service
 
 - Open your terminal
-- `git clone git@github.com:ianrichard/api-ai-webhook-starter.git`
-- `cd api-ai-webhook-starter`
+- `git clone git@github.com:ianrichard/common-chatbot-ui-starter-project.git`
+- `cd common-chatbot-ui-starter-project`
 - If you're going to use Facebook Messenger, make a facebook-access-token.txt in the root of the project next to package.json.  Paste the page access token as a single line in that file.  This is not checked in for security purposes and so people don't accidentally copy your project.
 - `npm install`
 - `npm run build`
@@ -43,7 +43,7 @@ This will take a little while :)
 - Note, you need to repeat this same thing for every new intent you make.
 - If you use webhooks, then do not try and enter inputs manually in Dialogflow
 - The action names will correspond to the keys of the return object in responses/index.js.  The initial welcome and errors are a bit of an exception and you can see how that's being dealt with in utils/request-handler.js.
-- Also look at logs/original-incoming-api-ai-data.json to see what is being processed.
+- Also look at logs/original-incoming-dialogflow-data.json to see what is being processed.
 
 ### Configure the Webhook
 - Select "Fulfillment" tab on the left side of the screen
