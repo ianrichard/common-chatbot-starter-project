@@ -1,6 +1,6 @@
 # What is this?
 
-This will allow you to connect your own webhooks to api.ai for dynamic chat applications.
+This will allow you to connect your own webhooks to Dialogflow (formerly API.AI) for dynamic chat applications.
 
 This is currently a work in progress and potentially unstable.
 
@@ -31,17 +31,17 @@ This will take a little while :)
 - Type `lt --port 8080` where the port matches the one listed above.
 - A URL will be listed once that runs that you can hit in the browser such as `https://abcde12345.localtunnel.me`
 
-## Configuring API.AI
+## Configuring Dialogflow
 
 ### Set up the Project
-- Be sure to follow all of the setup instructions from the [API.AI console](http://console.api.ai) for getting the project started and the integrations hooked up.
-- Note that setting up Facebook Messenger and Google Assistant involves some work on their end and can take a little while.  API.AI does a nice job of providing you all the links, instructions and screenshots.
+- Be sure to follow all of the setup instructions from the [Dialogflow console](http://console.Dialogflow) for getting the project started and the integrations hooked up.
+- Note that setting up Facebook Messenger and Google Assistant involves some work on their end and can take a little while.  Dialogflow does a nice job of providing you all the links, instructions and screenshots.
 
 ### Plumb Up the Action
 - On any intent, including the default welcome one, be sure an action name is assigned.
 - Under "Fulfillment", check "Use webhook"
 - Note, you need to repeat this same thing for every new intent you make.
-- If you use webhooks, then do not try and enter inputs manually in API.AI
+- If you use webhooks, then do not try and enter inputs manually in Dialogflow
 - The action names will correspond to the keys of the return object in responses/index.js.  The initial welcome and errors are a bit of an exception and you can see how that's being dealt with in utils/request-handler.js.
 - Also look at logs/original-incoming-api-ai-data.json to see what is being processed.
 

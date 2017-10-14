@@ -1,12 +1,24 @@
-import getResponses from '../responses';
+import responses from '../responses';
 
-export default function handleRequest(originalIncomingObjectFromApiAi) {
-    
-    const responses = getResponses();
-    const action = originalIncomingObjectFromApiAi.result.action;
+export default function handleRequest(originalIncomingObjectFromDialogflow) {
+
+    const action = originalIncomingObjectFromDialogflow.result.action;
 
     if (responses[action]) {
-        return responses[action]();
+
+        let parameters = originalIncomingObjectFromDialogflow.result.parameters;
+
+        const originalRequest = originalIncomingObjectFromDialogflow.originalRequest;
+
+        if (originalRequest.source === 'google'
+            && originalRequest.data.inputs && originalRequest.data.inputs[0]
+            && originalRequest.data.inputs[0].intent === 'actions.intent.OPTION') {
+            parameters.selectedOption = originalRequest.data.inputs[0].arguments[0].textValue
+        }
+
+        return responses[action]({
+            parameters: parameters
+        });
     }
     // actions.intent.PERMISSION is what Google uses to get the user access token
     // which is subsequently used in the profile JS to get the user profile data

@@ -1,150 +1,226 @@
-import {getUserProfile} from 'api-ai-webhook-utils';
-import resolvedQueryContains from '../utils/string-contains';
-import getGiphyUrl from '../utils/giphy-url';
+// import {getUserProfile} from 'common-chatbot-ui';
+// import stringContains from '../utils/string-contains';
+// import getGiphyUrl from '../utils/giphy-url';
 
-export default function getResponses() {
-    const userProfile = getUserProfile();
+const imageUrlBase = 'https://ianrichard.github.io/common-chatbot-ui-starter-project/demo/images/';
 
-    return {
-        welcome: () => {
-            return [
-                {
-                    type: 'text',
-                    message: 'Hey there! This is a guided tour of common components between Facebook Messenger and Google Assistant.'
+export default {
+    welcome: () => {
+        return [
+            {
+                type: 'text',
+                message: 'Hey there! This is a guided tour of common components between Facebook Messenger and Google Assistant.'
+            },
+            {
+                type: 'text',
+                message: 'You can start coding the sample project at github.com/ianrichard.'
+            },
+            {
+                type: 'simple-responses',
+                values: ['Show me demos!', 'Show code & docs']
+            }
+        ]
+    },
+    codeLink: () => {
+        return [
+            {
+                type: 'text',
+                message: 'Sure - Here it is.'
+            },
+            {
+                type: 'card',
+                title: 'Common Chatbot UI Starter',
+                subTitle: 'A Project by Ian Richard',
+                image: {
+                    url: `${imageUrlBase}github.jpg`,
+                    accessibilityText: 'Github logo.'
                 },
-                {
-                    type: 'text',
-                    message: 'You can start coding the sample project at github.com/ianrichard.'
-                },
-                {
-                    type: 'simple-responses',
-                    values: ['Sweet!', 'Show me stuff!']
+                button: {
+                    title: 'Visit Site',
+                    facebookWebviewHeight: 'tall', // compact, tall or full
+                    url: 'https://github.com/ianrichard/common-chatbot-ui-starter-project'
                 }
-            ]
-        },
-        imageExample: () => {
-            return [
-                {
-                    type: 'text',
-                    message: 'Animated GIFs are always fun to add to the mix!'
+            },
+            {
+                type: 'simple-responses',
+                values: ['Show me demos!']
+            }
+        ]
+    },
+    imageExample: () => {
+        return [
+            {
+                type: 'text',
+                message: 'Animated GIFs are always fun to add to the mix!'
+            },
+            {
+                type: 'image',
+                url: `${imageUrlBase}colbert.gif`,
+                accessibilityText: 'Stephen Colbert at the beginning of the show being happy.'
+            },
+            {
+                type: 'simple-responses',
+                values: ['What about a card?']
+            }
+        ]
+    },
+    cardExample: () => {
+        return [
+            {
+                type: 'text',
+                message: 'Absolutely!'
+            },
+            {
+                type: 'text',
+                message: 'Named for a winding stretch of Hill Country highway, Devil’s Backbone is a Belgian-style tripel. Featuring a beautiful pale-golden color, this ale’s spicy hops and Belgian yeast work together to create a distinctive flavor and aroma. Don’t let the light color fool you, this one has a dark side too. Traditional Belgian brewing techniques add strength without increasing heaviness.'
+            },
+            {
+                type: 'card',
+                title: 'Devil’s Backbone',
+                subTitle: 'Belgian-Style Tripel',
+                image: {
+                    url: `${imageUrlBase}devils-backbone.jpg`,
+                    accessibilityText: 'Ice cold beer.'
                 },
-                {
-                    type: 'image',
-                    url: 'https://media.giphy.com/media/EyJss95ft0ali/giphy.gif',
-                    accessibilityText: 'Stephen Colbert at the beginning of the show being happy.'
-                },
-                {
-                    type: 'simple-responses',
-                    values: ['What about a card?']
+                button: {
+                    title: 'Read More',
+                    facebookWebviewHeight: 'tall', // compact, tall or full
+                    url: 'https://realalebrewing.com/beers/devils-backbone/'
                 }
-            ]
-        },
-        cardExample: () => {
-            return [
-                {
-                    type: 'text',
-                    message: 'Absolutely!'
-                },
-                {
-                    type: 'text',
-                    message: 'Named for a winding stretch of Hill Country highway, Devil’s Backbone is a Belgian-style tripel. Featuring a beautiful pale-golden color, this ale’s spicy hops and Belgian yeast work together to create a distinctive flavor and aroma. Don’t let the light color fool you, this one has a dark side too. Traditional Belgian brewing techniques add strength without increasing heaviness.'
-                },
-                {
-                    type: 'card',
-                    title: 'Devil’s Backbone',
-                    subTitle: 'Belgian-Style Tripel',
-                    image: {
-                        url: 'https://realalebrewing.com/wp-content/uploads/2015/01/Devils-Backbone-bottle-and-can-web-photography-final-700x550.png',
-                        accessibilityText: 'Ice cold beer.'
+            },
+            {
+                type: 'simple-responses',
+                values: ['How about a list?']
+            }
+        ];
+    },
+    listExample: () => {
+        return [
+            {
+                type: 'text',
+                message: 'Absolutely!'
+            },
+            {
+                type: 'text',
+                message: 'Who’s your favorite GOT character!?'
+            },
+            {
+                type: 'list',
+                facebookTopElementStyle: 'compact',
+                options: [
+                    {
+                        title: 'Tyrion Lannister',
+                        key: 'tyrion',
+                        subTitle: 'Peter Dinklage',
+                        imageUrl: `${imageUrlBase}got-tyrion.jpg`
                     },
-                    button: {
-                        title: 'Read More',
-                        facebookWebviewHeight: 'tall', // compact, tall or full
-                        url: 'https://realalebrewing.com/beers/devils-backbone/'
+                    {
+                        title: 'Daenerys Targaryen',
+                        key: 'daene',
+                        subTitle: 'Emilia Clarke',
+                        imageUrl: `${imageUrlBase}got-daenerys.jpg`
+                    },
+                    {
+                        title: 'Jon Snow',
+                        key: 'jon',
+                        subTitle: 'Kit Harington',
+                        imageUrl: `${imageUrlBase}got-jon.jpg`
                     }
-                },
-                {
-                    type: 'simple-responses',
-                    values: ['How about a list?']
-                }
-            ];
-        },
-        listExample: () => {
-            return [
-                {
-                    type: 'text',
-                    message: 'Absolutely!'
-                },
-                {
-                    type: 'text',
-                    message: 'Who’s your favorite GOT character!?'
-                },
-                {
-                    type: 'list',
-                    facebookTopElementStyle: 'compact',
-                    options: [
-                        {
-                            title: 'Peter Dinklage',
-                            subTitle: 'Tyrion Lannister',
-                            imageUrl: 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTM1MTI5Mzc0MF5BMl5BanBnXkFtZTYwNzgzOTQz._V1_UY317_CR20,0,214,317_AL_.jpg',
-                            facebookButtonTitle: 'Select'
-                        },
-                        {
-                            title: 'Emilia Clarke',
-                            subTitle: 'Daenerys Targaryen',
-                            imageUrl: 'https://images-na.ssl-images-amazon.com/images/M/MV5BNjg3OTg4MDczMl5BMl5BanBnXkFtZTgwODc0NzUwNjE@._V1_UX214_CR0,0,214,317_AL_.jpg',
-                            facebookButtonTitle: 'Select'
-                        },
-                        {
-                            title: 'Kit Harington',
-                            subTitle: 'Jon Snow',
-                            imageUrl: 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTA2NTI0NjYxMTBeQTJeQWpwZ15BbWU3MDIxMjgyNzY@._V1_UX214_CR0,0,214,317_AL_.jpg',
-                            facebookButtonTitle: 'Select'
-                        }
-                    ]
-                },
-                {
-                    type: 'simple-responses',
-                    values: ['A carousel?']
-                }
-            ]
-        },
-        carouselExample: () => {
-            return [
-                {
-                    type: 'text',
-                    message: 'Who’s your least favorite GOT character?'
-                },
-                {
-                    type: 'carousel',
-                    options: [
-                        {
-                            title: 'Peter Dinklage',
-                            subTitle: 'Tyrion Lannister',
-                            imageUrl: 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTM1MTI5Mzc0MF5BMl5BanBnXkFtZTYwNzgzOTQz._V1_UY317_CR20,0,214,317_AL_.jpg',
-                            facebookButtonTitle: 'Select'
-                        },
-                        {
-                            title: 'Emilia Clarke',
-                            subTitle: 'Daenerys Targaryen',
-                            imageUrl: 'https://images-na.ssl-images-amazon.com/images/M/MV5BNjg3OTg4MDczMl5BMl5BanBnXkFtZTgwODc0NzUwNjE@._V1_UX214_CR0,0,214,317_AL_.jpg',
-                            facebookButtonTitle: 'Select'
-                        },
-                        {
-                            title: 'Kit Harington',
-                            subTitle: 'Jon Snow',
-                            imageUrl: 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTA2NTI0NjYxMTBeQTJeQWpwZ15BbWU3MDIxMjgyNzY@._V1_UX214_CR0,0,214,317_AL_.jpg',
-                            facebookButtonTitle: 'Select'
-                        },
-                        {
-                            title: 'Kristian Nairn',
-                            subTitle: 'Hodor',
-                            imageUrl: 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTkwMzI5MzE5MV5BMl5BanBnXkFtZTcwMTkzOTc3OQ@@._V1_UY317_CR20,0,214,317_AL_.jpg',
-                            facebookButtonTitle: 'Select'
-                        }
-                    ]
-                }
-            ]
+                ]
+            }
+        ]
+    },
+    carouselExample: (config) => {
+
+        let dynamicResponseText = 'What!? None of them?';
+
+        const gotCharacter = config.parameters.selectedOption;
+
+        if (gotCharacter === 'tyrion') {
+            dynamicResponseText = 'I drink and I know things!';
+        } else if (gotCharacter === 'daene') {
+            dynamicResponseText = 'Fire!';
+        } else if (gotCharacter === 'jon') {
+            dynamicResponseText = 'King of the north!';
         }
-    };
-}
+
+        return [
+            {
+                type: 'text',
+                message: dynamicResponseText
+            },
+            {
+                type: 'text',
+                message: 'What are you going to buy your wife from Tiffany?'
+            },
+            {
+                type: 'carousel',
+                options: [
+                    {
+                        title: 'Aviator Sunglasses',
+                        key: 'sunglasses',
+                        subTitle: '$360',
+                        imageUrl: `${imageUrlBase}tiffany-glasses.jpg`
+                    },
+                    {
+                        title: 'Infinity Ring',
+                        key: 'ring',
+                        subTitle: '$200',
+                        imageUrl: `${imageUrlBase}tiffany-ring.jpg`
+                    },
+                    {
+                        title: 'Soleste Earrings',
+                        key: 'earrings',
+                        subTitle: '$5,600',
+                        imageUrl: `${imageUrlBase}tiffany-earrings.jpg`
+                    },
+                    {
+                        title: 'Infinity Pendant',
+                        key: 'pendant',
+                        subTitle: '$250',
+                        imageUrl: `${imageUrlBase}tiffany-necklace.jpg`
+                    },
+                    {
+                        title: 'East West Mini',
+                        key: 'watch',
+                        subTitle: '$7,500',
+                        imageUrl: `${imageUrlBase}tiffany-watch.jpg`
+                    }
+                ]
+            }
+        ]
+    },
+    outro: (config) => {
+        
+        let dynamicResponseText = 'The end';
+
+        const tiffanyItem = config.parameters.selectedOption;
+
+        if (tiffanyItem === 'sunglasses') {
+            dynamicResponseText = 'She’ll look cool in those shades!';
+        } else if (tiffanyItem === 'ring') {
+            dynamicResponseText = 'She’ll love you forever and keep men away with that ring!';
+        } else if (tiffanyItem === 'earrings') {
+            dynamicResponseText = 'Bling bling!  Her girlfriends will be jealous with those bright-colored earrings!';
+        } else if (tiffanyItem === 'pendant') {
+            dynamicResponseText = 'Your infinite love will always be close to her heart!';
+        } else if (tiffanyItem === 'watch') {
+            dynamicResponseText = 'You’d better be on time from here on out!';
+        }
+
+        return [
+            {
+                type: 'text',
+                message: dynamicResponseText
+            },
+            {
+                type: 'text',
+                message: 'Well, that’s the end of the demo.  Hope you enjoyed!'
+            },
+            {
+                type: 'simple-responses',
+                values: ['Start over']
+            }
+        ];
+    }
+};

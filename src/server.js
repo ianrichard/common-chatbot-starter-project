@@ -1,7 +1,7 @@
 const http = require('http');
 const fs = require('fs');
 
-import {getResponseObjectForApiAi, setUserProfile} from 'api-ai-webhook-utils';
+import {getResponseObjectForDialogflow, setUserProfile} from 'common-chatbot-ui';
 import handleRequest from './utils/request-handler';
 import logJsonToFile from './utils/log-json-to-file';
 
@@ -24,18 +24,18 @@ function requestHandler(req, res) {
 
         req.on('end', function () {
 
-            const originalIncomingObjectFromApiAi = JSON.parse(responseBody);
+            const originalIncomingObjectFromDialogflow = JSON.parse(responseBody);
 
             // useful for seeing what comes back from api.ai
-            logJsonToFile('original-incoming-api-ai-data', originalIncomingObjectFromApiAi);
+            logJsonToFile('original-incoming-api-ai-data', originalIncomingObjectFromDialogflow);
 
             const config = {
                 facebookAccessToken: fs.readFileSync(`${__dirname.split('dist')[0]}facebook-access-token.txt`, 'utf8')
             };
 
-            // setUserProfile(originalIncomingObjectFromApiAi, config).then(() => {
-                const customResponseObject = handleRequest(originalIncomingObjectFromApiAi);
-                res.end(JSON.stringify(getResponseObjectForApiAi(customResponseObject, originalIncomingObjectFromApiAi)));
+            // setUserProfile(originalIncomingObjectFromDialogflow, config).then(() => {
+                const customResponseObject = handleRequest(originalIncomingObjectFromDialogflow);
+                res.end(JSON.stringify(getResponseObjectForDialogflow(customResponseObject, originalIncomingObjectFromDialogflow)));
             // });
         });
     }

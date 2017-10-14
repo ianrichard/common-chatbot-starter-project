@@ -1,3 +1,3 @@
-export default function stringContains(string) {
-    return string.toLowerCase().indexOf(string.toLowerCase()) > -1;
+export default function stringContains(haystack, needle) {
+    return haystack.toLowerCase().indexOf(needle.toLowerCase()) > -1;
 }
