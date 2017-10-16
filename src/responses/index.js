@@ -2,7 +2,7 @@
 // import stringContains from '../utils/string-contains';
 // import getGiphyUrl from '../utils/giphy-url';
 
-const imageUrlBase = 'https://ianrichard.github.io/common-chatbot-ui-starter-project/demo/images/';
+const imageUrlBase = 'https://ianrichard.github.io/common-chatbot-ui-starter-project/media/demo/';
 
 export default {
     welcome: () => {

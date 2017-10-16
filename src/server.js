@@ -11,7 +11,7 @@ function requestHandler(req, res) {
 
     if (req.method === 'GET') {
         res.end(JSON.stringify({
-            message: 'It works!  But this service is meant for posts bro.'
+            message: 'It worksssss!  But this service is meant for posts bro.'
         }));
     }
 
