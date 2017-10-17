@@ -2,7 +2,7 @@
 
 This will allow you to connect your own webhooks to Dialogflow (formerly API.AI) for dynamic chat applications.
 
-This is currently a work in progress and potentially unstable.
+This is a work in progress and potentially unstable.  There is currently an unresolved issue on Google Assistant with handling consecutive list / carousel items.
 
 # Setup
 
