@@ -1,8 +1,14 @@
 # What is this?
 
-This will allow you to connect your own webhooks to Dialogflow (formerly API.AI) for dynamic chat applications.
+This will allow you to connect your own webhooks to Dialogflow (formerly API.AI) for dynamic distributed chat applications.
 
 This is a work in progress and potentially unstable.  There is currently an unresolved issue on Google Assistant with handling consecutive list / carousel items.
+
+# UI Components
+
+![Sample components](media/docs/common-chatbot-ui-components.jpg)
+
+You can create your own custom-formatted response for each platform, but this template project uses the underlying [common-chatbot-ui](https://github.com/ianrichard/common-chatbot-ui) module. Visual examples of each available component are shown on that repo's readme.
 
 # Setup
 
