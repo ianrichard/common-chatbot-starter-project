@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/server.js",
   "scripts": {
-    "build": "babel src -d dist -w -s",
+    "build": "babel src -d dist -s",
     "start": "node dist/server.js",
     "dev": "babel src -d dist -w -s & babel node_modules/common-chatbot-ui/src -d node_modules/common-chatbot-ui/lib -w -s  & nodemon dist/server.js & lt --port 8080"
   },
