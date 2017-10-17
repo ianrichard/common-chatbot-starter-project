@@ -10,7 +10,7 @@ export default function handleRequest(originalIncomingObjectFromDialogflow) {
 
         const originalRequest = originalIncomingObjectFromDialogflow.originalRequest;
 
-        if (originalRequest.source === 'google'
+        if (originalRequest && originalRequest.source === 'google'
             && originalRequest.data.inputs && originalRequest.data.inputs[0]
             && originalRequest.data.inputs[0].intent === 'actions.intent.OPTION') {
             parameters.selectedOption = originalRequest.data.inputs[0].arguments[0].textValue
