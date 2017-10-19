@@ -19,7 +19,7 @@ export default {
                 type: 'simple-responses',
                 values: ['Show me demos!', 'Show code & docs']
             }
-        ]
+        ];
     },
     codeLink: () => {
         return [
@@ -45,7 +45,7 @@ export default {
                 type: 'simple-responses',
                 values: ['Show me demos!']
             }
-        ]
+        ];
     },
     imageExample: () => {
         return [
@@ -62,7 +62,7 @@ export default {
                 type: 'simple-responses',
                 values: ['What about a card?']
             }
-        ]
+        ];
     },
     cardExample: () => {
         return [
@@ -127,8 +127,12 @@ export default {
                         imageUrl: `${imageUrlBase}got-jon.jpg`
                     }
                 ]
+            },
+            {
+                type: 'config',
+                outputContext: 'carouselExample'
             }
-        ]
+        ];
     },
     carouselExample: (config) => {
 
@@ -187,8 +191,12 @@ export default {
                         imageUrl: `${imageUrlBase}tiffany-watch.jpg`
                     }
                 ]
+            },
+            {
+                type: 'config',
+                outputContext: 'outro'
             }
-        ]
+        ];
     },
     outro: (config) => {
         
