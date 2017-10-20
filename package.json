@@ -4,14 +4,15 @@
   "description": "",
   "main": "dist/server.js",
   "scripts": {
-    "build": "babel src -d dist -s",
+    "build": "babel src -d dist --copy-files -s",
     "start": "node dist/server.js",
-    "dev": "babel src -d dist -w -s & babel node_modules/common-chatbot-ui/src -d node_modules/common-chatbot-ui/lib -w -s  & nodemon dist/server.js & lt --port 8080"
+    "dev": "babel src -d dist --copy-files -w -s & babel node_modules/common-chatbot-ui/src -d node_modules/common-chatbot-ui/lib -w -s  & nodemon dist/server.js & lt --port 8080"
   },
   "repository": "https://github.com/ianrichard/common-chatbot-ui-starter-project",
   "author": "Ian Smith <smith.ianrichard@gmail.com>",
   "dependencies": {
-    "common-chatbot-ui": "^0.1.1"
+    "common-chatbot-ui": "^0.1.1",
+    "express": "^4.16.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

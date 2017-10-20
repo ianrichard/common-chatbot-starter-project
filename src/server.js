@@ -1,50 +1,47 @@
-const http = require('http');
+const express = require('express');
+const app = express();
+
 const fs = require('fs');
 
 import {getResponseObjectForDialogflow, setUserProfile} from 'common-chatbot-ui';
 import handleRequest from './utils/request-handler';
 import logJsonToFile from './utils/log-json-to-file';
 
-function requestHandler(req, res) {
+app.get('/', function (req, res) {
+    res.end(JSON.stringify({
+        message: 'It works!  But this service is meant for posts bro.'
+    }));
+});
 
-    res.setHeader('Content-Type', 'application/json');
+app.post('/', function (req, res) {
+    let responseBody = '';
 
-    if (req.method === 'GET') {
-        res.end(JSON.stringify({
-            message: 'It works!  But this service is meant for posts bro.'
-        }));
-    }
+    req.on('data', function (data) {
+        responseBody += data;
+    });
 
-    else if (req.method === 'POST') {
-        let responseBody = '';
+    req.on('end', function () {
 
-        req.on('data', function (data) {
-            responseBody += data;
-        });
+        const originalIncomingObjectFromDialogflow = JSON.parse(responseBody);
 
-        req.on('end', function () {
+        // useful for seeing what comes back from Dialogflow
+        logJsonToFile('original-incoming-dialogflow-data', originalIncomingObjectFromDialogflow);
 
-            const originalIncomingObjectFromDialogflow = JSON.parse(responseBody);
+        const config = {
+            facebookAccessToken: fs.readFileSync(`${__dirname.split('dist')[0]}facebook-access-token.txt`, 'utf8')
+        };
 
-            // useful for seeing what comes back from api.ai
-            logJsonToFile('original-incoming-dialogflow-data', originalIncomingObjectFromDialogflow);
+        // setUserProfile(originalIncomingObjectFromDialogflow, config).then(() => {
+            const customResponseObject = handleRequest(originalIncomingObjectFromDialogflow);
+            res.end(JSON.stringify(getResponseObjectForDialogflow(customResponseObject, originalIncomingObjectFromDialogflow)));
+        // });
+    });
+});
 
-            const config = {
-                facebookAccessToken: fs.readFileSync(`${__dirname.split('dist')[0]}facebook-access-token.txt`, 'utf8')
-            };
-
-            // setUserProfile(originalIncomingObjectFromDialogflow, config).then(() => {
-                const customResponseObject = handleRequest(originalIncomingObjectFromDialogflow);
-                res.end(JSON.stringify(getResponseObjectForDialogflow(customResponseObject, originalIncomingObjectFromDialogflow)));
-            // });
-        });
-    }
-
-}
+app.use('/static', express.static(`${__dirname}/webview`));
 
 const PORT = process.env.PORT || '8080';
 
-http.createServer(requestHandler).listen(PORT, () => {
-    console.log(`App listening on port ${PORT}`);
-    console.log(`Load http://localhost:8080/ in your web browser for local development.`)
-});
+app.listen(PORT, function () {
+    console.log(`Load http://localhost:${PORT}/ in your web browser for local development.`);
+})
