@@ -4,14 +4,17 @@
   "description": "",
   "main": "dist/server.js",
   "scripts": {
-    "build": "babel src -d dist -s",
+    "build": "babel src -d dist --copy-files -s",
     "start": "node dist/server.js",
-    "dev": "babel src -d dist -w -s & babel node_modules/common-chatbot-ui/src -d node_modules/common-chatbot-ui/lib -w -s  & nodemon dist/server.js & lt --port 8080"
+    "dev": "babel src -d dist --copy-files -w -s & babel ../common-chatbot-ui/src -d node_modules/common-chatbot-ui/lib --copy-files -w -s & nodemon dist/server.js & lt --subdomain yoursubdomain --port 8080"
   },
   "repository": "https://github.com/ianrichard/common-chatbot-ui-starter-project",
   "author": "Ian Smith <smith.ianrichard@gmail.com>",
   "dependencies": {
-    "common-chatbot-ui": "^0.1.1"
+    "body-parser": "^1.18.2",
+    "common-chatbot-ui": "^0.1.2",
+    "express": "^4.16.2",
+    "request": "^2.83.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -25,8 +28,12 @@
       "es2015"
     ]
   },
-  "appFlags": {
-    "writeLogsToFiles": "true"
+  "appSettings": {
+    "writeLogsToFiles": "true",
+    "facebook": {
+      "accessToken": "",
+      "pageId": ""
+    }
   },
   "license": "MIT"
 }

@@ -1,8 +1,6 @@
 // import {getUserProfile} from 'common-chatbot-ui';
-// import stringContains from '../utils/string-contains';
-// import getGiphyUrl from '../utils/giphy-url';
 
-const imageUrlBase = 'https://ianrichard.github.io/common-chatbot-ui-starter-project/media/demo/';
+const imageUrlBase = 'https://yourrepo.github.io/common-chatbot-ui-starter-project/media/demo/';
 
 export default {
     welcome: () => {
@@ -13,7 +11,7 @@ export default {
             },
             {
                 type: 'text',
-                message: 'You can start coding the sample project at github.com/ianrichard.'
+                message: 'You can start coding the sample project at github.com/yourrepo.'
             },
             {
                 type: 'simple-responses',
@@ -38,7 +36,7 @@ export default {
                 button: {
                     title: 'Visit Site',
                     facebookWebviewHeight: 'tall', // compact, tall or full
-                    url: 'https://github.com/ianrichard/common-chatbot-ui-starter-project'
+                    url: 'https://github.com/yourrepo/common-chatbot-ui-starter-project'
                 }
             },
             {
@@ -64,7 +62,13 @@ export default {
             }
         ];
     },
-    cardExample: () => {
+    cardExample: (config) => {
+        let url = `https://yourrepo.localtunnel.me/static/`;
+        if (config.facebook) {
+            url += `?platform=facebook&pageId=${config.facebook.pageId}&userId=${config.facebook.userId}`;
+        } else if (config.google) {
+            url += `?platform=google`;
+        }
         return [
             {
                 type: 'text',
@@ -85,7 +89,7 @@ export default {
                 button: {
                     title: 'Read More',
                     facebookWebviewHeight: 'tall', // compact, tall or full
-                    url: 'https://realalebrewing.com/beers/devils-backbone/'
+                    url: url
                 }
             },
             {

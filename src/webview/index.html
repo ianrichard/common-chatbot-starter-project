@@ -1,0 +1,27 @@
+<html>
+    
+    <head>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=0, maximum-scale=1" />
+        <link rel="stylesheet" href="webview.css" />
+        <title>Some Awesome Webview</title>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="contentSection" id="facebookContent">
+                <h1>Facebook Webview</h1>
+                <p>This webview knows that it's loaded in Facebook Messenger versus Google Assistant.</p>
+                <p>This shows functionality exclusive to Facebook Messenger including the ability to trigger closing the webview as well as sending messages from the bot to the user.</p>
+                <input type="text" id="facebookMessageInput" />
+                <button id="facebookSendMessageButton">Send Message</button>
+                <hr />
+                <button id="facebookCloseWebviewButton">Close Webview</button>
+            </div>
+            <div class="contentSection" id="googleContent">
+                <h1>Google Webview</h1>
+                <p>This webview knows that it's loaded in Google Assistant versus Facebook Messenger.</p>
+            </div>
+        </div>
+    </body>
+    <script src="webview.js"></script>
+</html>

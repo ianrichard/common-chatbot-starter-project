@@ -1,0 +1,54 @@
+* {
+    box-sizing: border-box;
+    font-size: 18px;
+    color: #000;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+*:focus {
+    outline: none;
+}
+
+body {
+    margin: 45px;
+    font-family: sans-serif;
+}
+
+.container {
+    margin: 0 auto;
+    width: 90%;
+    max-width: 320px;
+}
+
+.contentSection {
+    display: none;
+}
+
+.contentSection--loaded {
+    display: block;
+}
+
+button {
+    margin: 8px 0;
+    background: black;
+    border: 1px solid black;
+    border-radius: 0;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+input {
+    padding: 6px 13px;
+    border: 1px solid black;
+    width: 100%;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+hr {
+    border: none;
+    border-bottom: 1px solid black;
+    margin: 32px 0;
+}
