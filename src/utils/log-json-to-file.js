@@ -3,7 +3,7 @@ const path = require('path');
 
 export default function logJsonToFile(fileName, json) {
 
-    const shouldWriteLogsToFiles = JSON.parse(fs.readFileSync(`${__dirname.split('dist')[0]}package.json`)).appFlags.writeLogsToFiles;
+    const shouldWriteLogsToFiles = JSON.parse(fs.readFileSync(`${__dirname.split('dist')[0]}package.json`)).appSettings.writeLogsToFiles;
 
     if (shouldWriteLogsToFiles) {
 

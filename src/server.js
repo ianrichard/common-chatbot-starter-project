@@ -1,47 +1,65 @@
 const express = require('express');
-const app = express();
-
+const bodyParser = require('body-parser');
 const fs = require('fs');
+const outboundRequest = require('request');
+
+const expressServer = express();
+expressServer.use(bodyParser.json());
 
 import {getResponseObjectForDialogflow, setUserProfile} from 'common-chatbot-ui';
 import handleRequest from './utils/request-handler';
 import logJsonToFile from './utils/log-json-to-file';
 
-app.get('/', function (req, res) {
-    res.end(JSON.stringify({
+const facebookAccessToken = JSON.parse(fs.readFileSync(`${__dirname.split('dist')[0]}package.json`)).appSettings.facebookAccessToken;
+
+expressServer.get('/', function (request, response) {
+    response.end(JSON.stringify({
         message: 'It works!  But this service is meant for posts bro.'
     }));
 });
 
-app.post('/', function (req, res) {
-    let responseBody = '';
+expressServer.post('/', function (request, response) {
 
-    req.on('data', function (data) {
-        responseBody += data;
-    });
+    const originalIncomingObjectFromDialogflow = request.body;
 
-    req.on('end', function () {
+    // useful for seeing what comes back from Dialogflow
+    logJsonToFile('original-incoming-dialogflow-data', originalIncomingObjectFromDialogflow);
 
-        const originalIncomingObjectFromDialogflow = JSON.parse(responseBody);
+    const config = {
+        facebookAccessToken: facebookAccessToken
+    };
 
-        // useful for seeing what comes back from Dialogflow
-        logJsonToFile('original-incoming-dialogflow-data', originalIncomingObjectFromDialogflow);
-
-        const config = {
-            facebookAccessToken: fs.readFileSync(`${__dirname.split('dist')[0]}facebook-access-token.txt`, 'utf8')
-        };
-
-        // setUserProfile(originalIncomingObjectFromDialogflow, config).then(() => {
-            const customResponseObject = handleRequest(originalIncomingObjectFromDialogflow);
-            res.end(JSON.stringify(getResponseObjectForDialogflow(customResponseObject, originalIncomingObjectFromDialogflow)));
-        // });
-    });
+    // setUserProfile(originalIncomingObjectFromDialogflow, config).then(() => {
+        const customResponseObject = handleRequest(originalIncomingObjectFromDialogflow);
+        response.end(JSON.stringify(getResponseObjectForDialogflow(customResponseObject, originalIncomingObjectFromDialogflow)));
+    // });
 });
 
-app.use('/static', express.static(`${__dirname}/webview`));
+expressServer.post('/facebook_send', function (request, response) {
+
+    outboundRequest({
+        url: `https://graph.facebook.com/v2.6/me/messages?access_token=EAAB7wjZC24xYBANxltn2BVXuk4jgiZBZCqeTS0XFpJNqijyTSrGem2hzM2QXKPDsXkvgM3o1kihISE78uhHAJ5Btvbd1yBqwZB5HYVTnCbYZCulb8E0eosGZAFGswPOkpm1lXkogLzA7BGCIZB7vaE9n1m7Mc2ZBK6Ju0dHTzVLZBTAZDZD`,
+        method: 'POST',
+        headers: [{ name: 'content-type', value: 'application/json' }],
+        json: true,
+        body: {
+            recipient: { id: request.body.userId },
+            message: { text: request.body.message }
+        }
+    }, function (error, outboundResponse, outboundBody) {
+        if (outboundBody && outboundBody.message_id) {
+            response.end(JSON.stringify({message: 'Successfully sent Facebook message'}));
+        } else {
+            response.end(JSON.stringify({message: 'Error sending Facebook message'}));
+        }
+    });
+
+});
+
+expressServer.use('/static', express.static(`${__dirname}/webview`));
 
 const PORT = process.env.PORT || '8080';
 
-app.listen(PORT, function () {
+expressServer.listen(PORT, function () {
     console.log(`Load http://localhost:${PORT}/ in your web browser for local development.`);
 })

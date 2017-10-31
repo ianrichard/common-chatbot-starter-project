@@ -2,7 +2,7 @@
 
 This will allow you to connect your own webhooks to Dialogflow (formerly API.AI) for dynamic distributed chat applications.
 
-This is a work in progress and potentially unstable.  There is currently an unresolved issue on Google Assistant with handling consecutive list / carousel items.
+This is a work in progress and potentially unstable. As of 10/31/2017, there are some bugs in the web version of Google Assistant where certain components won't render properly, but they work fine on the phone.  I contacted Google and they said they were working on it.
 
 # UI Components
 
@@ -12,15 +12,28 @@ You can create your own custom-formatted response for each platform, but this te
 
 # Setup
 
+## Facebook Configuration
+
+- If you want to explicitly close or send messages from your webview, or access user profile data, you'll need to enter the accessToken and pageId in the package.json file.  Be sure to not check this in for security purposes.
+  - If you don't need this, don't enter those values in `package.json` and delete the majority of the Facebook section in `webview.js`.
+
+## Response Option Configuration
+
+- Open `src\responses\index.js` and change all reference of `https://yourrepo.github.io` to wherever your repo is.
+- Also be sure that you [configure Github Pages](https://pages.github.com/) for your cloned or forked repo.  For simple projects, you can use master, but if you have a dev version, you can set it to another branch.
+
+
 ## Run Your Local Service
 
 - Open your terminal
 - `git clone git@github.com:ianrichard/common-chatbot-ui-starter-project.git`
 - `cd common-chatbot-ui-starter-project`
-- (Optional) If you're going to use Facebook Messenger and want to access user profile data, make a facebook-access-token.txt in the root of the project next to package.json.  Paste the page access token as a single line in that file.  This is not checked in for security purposes and so people don't accidentally copy your project.
 - `npm install`
+- Open `package.json` and on the `dev` setting under `scripts`, change `yoursubdomain` to whatever you want.  This is useful for keeping a persistent URL that you can set in Dialogflow instead of getting the default randomly-assigned one from localtunnel.me.
+  - If you don't change `yoursubdomain`, you'll likely be in conflict with other people who aren't paying attention to this message and get random stuff.
+  - Some people use ngrok instead of localtunnel, but if you set the subdomain flag on localtunnel, it's essentially the same thing for free :)
 - `npm run dev`
-- A URL will be listed once that runs that you can hit in the browser such as `https://abcde12345.localtunnel.me`
+- A URL will be listed once that runs that you can hit in the browser such as `https://yoursubdomain.localtunnel.me`
 
 ## Configuring Dialogflow
 
@@ -29,7 +42,7 @@ You can create your own custom-formatted response for each platform, but this te
 
 ### Configure the Webhook
 - Select "Fulfillment" tab on the left side of the screen
-- On the URL, put the URL of your service (note that with local tunnelling, it will probably pretty temporary, so you'll have to update periodically)
+- On the URL, put the URL of your service that was set up earlier.
 - Domains > Enable webhook for all domains
 
 ### Dialogflow Setup
@@ -47,9 +60,8 @@ You can create your own custom-formatted response for each platform, but this te
 # Contributing to Underlying common-chatbot-ui Framework
 
 - Clone [common-chatbot-ui](https://github.com/ianrichard/common-chatbot-ui) as a sibling project to this one (i.e. common-chatbot-ui and common-chatbot-ui-starter-project are right next to each other on your local file system)
-- `cd common-chatbot-ui`, `npm install`, `npm link`
-- `cd ../common-chatbot-ui-starter-project`, `npm link common-chatbot-ui`
-- When you run `npm run dev` in this project, Babel has a watcher into the underlying repo and transpiles it vs you having to do it on the underlying repo
+- `cd common-chatbot-ui`, `npm install`
+- When you run `npm run dev` in this project, Babel has a watcher into the underlying repo and transpiles it vs you having to run anything on the other repo.  You don't need to do NPM linking.  This project has a watcher for a sibling project and if it does, it transpiles the code and copies it into the node_modules for you.
 - Once you've done awesome stuff, do a pull request in [common-chatbot-ui](https://github.com/ianrichard/common-chatbot-ui)
 
 # Alternative Hosting Solutions
