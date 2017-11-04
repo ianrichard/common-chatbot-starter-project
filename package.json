@@ -1,18 +1,18 @@
 {
-  "name": "common-chatbot-ui-starter-project",
+  "name": "common-chatbot-starter-project",
   "version": "0.0.0",
   "description": "",
   "main": "dist/server.js",
   "scripts": {
     "build": "babel src -d dist --copy-files -s",
     "start": "node dist/server.js",
-    "dev": "babel src -d dist --copy-files -w -s & babel ../common-chatbot-ui/src -d node_modules/common-chatbot-ui/lib --copy-files -w -s & nodemon dist/server.js & lt --subdomain yoursubdomain --port 8080"
+    "dev": "babel src -d dist --copy-files -w -s & babel ../common-chatbot/src -d node_modules/common-chatbot/lib --copy-files -w -s & nodemon dist/server.js & lt --subdomain ianrichard --port 8080"
   },
-  "repository": "https://github.com/ianrichard/common-chatbot-ui-starter-project",
+  "repository": "https://github.com/ianrichard/common-chatbot-starter-project",
   "author": "Ian Smith <smith.ianrichard@gmail.com>",
   "dependencies": {
     "body-parser": "^1.18.2",
-    "common-chatbot-ui": "^0.1.2",
+    "common-chatbot": "^0.0.0",
     "express": "^4.16.2",
     "request": "^2.83.0"
   },

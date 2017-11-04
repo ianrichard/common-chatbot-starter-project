@@ -48,4 +48,8 @@ if (queryStringParamsObject.platform === 'facebook') {
     };
 } else if (queryStringParamsObject.platform === 'google') {
     document.querySelector('#googleContent').classList.add('contentSection--loaded');
+    document.querySelector('#googleCloseWebviewButton').addEventListener('click', function(elem) {
+        history.back();
+        window.close();
+    });
 }

@@ -6,7 +6,7 @@ const outboundRequest = require('request');
 const expressServer = express();
 expressServer.use(bodyParser.json());
 
-import {getResponseObjectForDialogflow, setUserProfile} from 'common-chatbot-ui';
+import {getResponseObjectForDialogflow, setUserProfile} from 'common-chatbot';
 import handleRequest from './utils/request-handler';
 import logJsonToFile from './utils/log-json-to-file';
 

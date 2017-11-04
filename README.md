@@ -6,9 +6,9 @@ This is a work in progress and potentially unstable. As of 10/31/2017, there are
 
 # UI Components
 
-![Sample components](media/docs/common-chatbot-ui-components.jpg)
+![Sample components](media/docs/common-chatbot-components.jpg)
 
-You can create your own custom-formatted response for each platform, but this template project uses the underlying [common-chatbot-ui](https://github.com/ianrichard/common-chatbot-ui) module. Visual examples of each available component are shown on that repo's readme.
+You can create your own custom-formatted response for each platform, but this template project uses the underlying [common-chatbot](https://github.com/ianrichard/common-chatbot) module. Visual examples of each available component are shown on that repo's readme.
 
 # Setup
 
@@ -26,8 +26,8 @@ You can create your own custom-formatted response for each platform, but this te
 ## Run Your Local Service
 
 - Open your terminal
-- `git clone git@github.com:ianrichard/common-chatbot-ui-starter-project.git`
-- `cd common-chatbot-ui-starter-project`
+- `git clone git@github.com:ianrichard/common-chatbot-starter-project.git`
+- `cd common-chatbot-starter-project`
 - `npm install`
 - Open `package.json` and on the `dev` setting under `scripts`, change `yoursubdomain` to whatever you want.  This is useful for keeping a persistent URL that you can set in Dialogflow instead of getting the default randomly-assigned one from localtunnel.me.
   - If you don't change `yoursubdomain`, you'll likely be in conflict with other people who aren't paying attention to this message and get random stuff.
@@ -47,7 +47,7 @@ You can create your own custom-formatted response for each platform, but this te
 
 ### Dialogflow Setup
 
-- In your Dialogflow project, go to the project settings (gear icon) > Export and Import, then "Import from ZIP".  From this project, upload `dialogflow-project/common-chatbot-ui-export.zip`
+- In your Dialogflow project, go to the project settings (gear icon) > Export and Import, then "Import from ZIP".  From this project, upload `dialogflow-project/common-chatbot-export.zip`
 - If you want to hook this up on your own (or want to add new intents), continue the following steps.
 - On any intent, including the default welcome one, be sure an action name is assigned.
 - Under "Fulfillment", check "Use webhook"
@@ -57,12 +57,12 @@ You can create your own custom-formatted response for each platform, but this te
 - Also look at logs/original-incoming-dialogflow-data.json to see what is being processed.
 ![Dialogflow sample intent](media/instructions/instructions.jpg "Logo Title Text 1")
 
-# Contributing to Underlying common-chatbot-ui Framework
+# Contributing to Underlying common-chatbot Framework
 
-- Clone [common-chatbot-ui](https://github.com/ianrichard/common-chatbot-ui) as a sibling project to this one (i.e. common-chatbot-ui and common-chatbot-ui-starter-project are right next to each other on your local file system)
-- `cd common-chatbot-ui`, `npm install`
+- Clone [common-chatbot](https://github.com/ianrichard/common-chatbot) as a sibling project to this one (i.e. common-chatbot and common-chatbot-starter-project are right next to each other on your local file system)
+- `cd common-chatbot`, `npm install`
 - When you run `npm run dev` in this project, Babel has a watcher into the underlying repo and transpiles it vs you having to run anything on the other repo.  You don't need to do NPM linking.  This project has a watcher for a sibling project and if it does, it transpiles the code and copies it into the node_modules for you.
-- Once you've done awesome stuff, do a pull request in [common-chatbot-ui](https://github.com/ianrichard/common-chatbot-ui)
+- Once you've done awesome stuff, do a pull request in [common-chatbot](https://github.com/ianrichard/common-chatbot)
 
 # Alternative Hosting Solutions
 

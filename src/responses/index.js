@@ -1,6 +1,6 @@
-// import {getUserProfile} from 'common-chatbot-ui';
+// import {getUserProfile} from 'common-chatbot';
 
-const imageUrlBase = 'https://yourrepo.github.io/common-chatbot-ui-starter-project/media/demo/';
+const imageUrlBase = 'https://ianrichard.github.io/common-chatbot-starter-project/media/demo/';
 
 export default {
     welcome: () => {
@@ -11,7 +11,7 @@ export default {
             },
             {
                 type: 'text',
-                message: 'You can start coding the sample project at github.com/yourrepo.'
+                message: 'You can start coding the sample project at github.com/ianrichard.'
             },
             {
                 type: 'simple-responses',
@@ -36,7 +36,7 @@ export default {
                 button: {
                     title: 'Visit Site',
                     facebookWebviewHeight: 'tall', // compact, tall or full
-                    url: 'https://github.com/yourrepo/common-chatbot-ui-starter-project'
+                    url: 'https://github.com/ianrichard/common-chatbot-starter-project'
                 }
             },
             {
@@ -63,7 +63,7 @@ export default {
         ];
     },
     cardExample: (config) => {
-        let url = `https://yourrepo.localtunnel.me/static/`;
+        let url = `https://ianrichard.localtunnel.me/static/`;
         if (config.facebook) {
             url += `?platform=facebook&pageId=${config.facebook.pageId}&userId=${config.facebook.userId}`;
         } else if (config.google) {
