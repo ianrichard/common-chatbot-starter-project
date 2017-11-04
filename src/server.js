@@ -10,7 +10,7 @@ import {getResponseObjectForDialogflow, setUserProfile} from 'common-chatbot';
 import handleRequest from './utils/request-handler';
 import logJsonToFile from './utils/log-json-to-file';
 
-const facebookAccessToken = JSON.parse(fs.readFileSync(`${__dirname.split('dist')[0]}package.json`)).appSettings.facebookAccessToken;
+const facebookAccessToken = JSON.parse(fs.readFileSync(`${__dirname.split('dist')[0]}package.json`)).appSettings.facebook.accessToken;
 
 expressServer.get('/', function (request, response) {
     response.end(JSON.stringify({
@@ -38,7 +38,7 @@ expressServer.post('/', function (request, response) {
 expressServer.post('/facebook_send', function (request, response) {
 
     outboundRequest({
-        url: `https://graph.facebook.com/v2.6/me/messages?access_token=EAAB7wjZC24xYBANxltn2BVXuk4jgiZBZCqeTS0XFpJNqijyTSrGem2hzM2QXKPDsXkvgM3o1kihISE78uhHAJ5Btvbd1yBqwZB5HYVTnCbYZCulb8E0eosGZAFGswPOkpm1lXkogLzA7BGCIZB7vaE9n1m7Mc2ZBK6Ju0dHTzVLZBTAZDZD`,
+        url: `https://graph.facebook.com/v2.6/me/messages?access_token=${facebookAccessToken}`,
         method: 'POST',
         headers: [{ name: 'content-type', value: 'application/json' }],
         json: true,

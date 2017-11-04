@@ -6,7 +6,7 @@
   "scripts": {
     "build": "babel src -d dist --copy-files -s",
     "start": "node dist/server.js",
-    "dev": "babel src -d dist --copy-files -w -s & babel ../common-chatbot/src -d node_modules/common-chatbot/lib --copy-files -w -s & nodemon dist/server.js & lt --subdomain ianrichard --port 8080"
+    "dev": "babel src -d dist --copy-files -w -s & babel ../common-chatbot/src -d node_modules/common-chatbot/lib --copy-files -w -s & nodemon dist/server.js & lt --subdomain yoursubdomain --port 8080"
   },
   "repository": "https://github.com/ianrichard/common-chatbot-starter-project",
   "author": "Ian Smith <smith.ianrichard@gmail.com>",
