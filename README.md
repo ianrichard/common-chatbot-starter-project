@@ -1,21 +1,16 @@
 # What is this?
 
-This will allow you to connect your own webhooks to Dialogflow (formerly API.AI) for dynamic distributed chat applications.
+This will allow you to create webhooks for integrating with Facebook Messenger directly (Google Assistant soon) or through the intermediary intent-processing platform Dialogflow (formerly API.ai), which can subsequently connect to Facebook Messenger, Google Assistant and many other platforms.
 
-This is a work in progress and potentially unstable. As of 10/31/2017, there are some bugs in the web version of Google Assistant where certain components won't render properly, but they work fine on the phone.  I contacted Google and they said they were working on it.
+This template project uses the underlying [common-chatbot](https://github.com/ianrichard/common-chatbot) module, which simplifies and abstracts responses for the platforms so you can focus more on your app vs the implementation.
 
-# UI Components
+# UI Component Examples
 
 ![Sample components](media/docs/common-chatbot-components.jpg)
 
-You can create your own custom-formatted response for each platform, but this template project uses the underlying [common-chatbot](https://github.com/ianrichard/common-chatbot) module. Visual examples of each available component are shown on that repo's readme.
+More visual examples of each available component are shown on the [common-chatbot](https://github.com/ianrichard/common-chatbot) readme.
 
 # Setup
-
-## Facebook Configuration
-
-- If you want to explicitly close or send messages from your webview, or access user profile data, you'll need to enter the accessToken and pageId in the package.json file.  Be sure to not check this in for security purposes.
-  - If you don't need this, don't enter those values in `package.json` and delete the majority of the Facebook section in `webview.js`.
 
 ## Response Option Configuration
 
@@ -35,18 +30,21 @@ You can create your own custom-formatted response for each platform, but this te
 - `npm run dev`
 - A URL will be listed once that runs that you can hit in the browser such as `https://yoursubdomain.localtunnel.me`
 
-## Configuring Dialogflow
+# Configuring Facebook Messenger Webhook
 
-### Set up the Project
+- In the "Webhooks" tab of the app's settings in the [Facebook developer console](https://developers.facebook.com), set the subscription to the URL of your service that was set up earlier.
+
+# Configuring Dialogflow Webhook
+
+## Set up the Project
 - Be sure to follow all of the setup instructions from the [Dialogflow console](http://console.Dialogflow) for getting the project started and the integrations hooked up for Assistant and Messenger
 
-### Configure the Webhook
+## Configure the Webhook
 - Select "Fulfillment" tab on the left side of the screen
 - On the URL, put the URL of your service that was set up earlier.
 - Domains > Enable webhook for all domains
 
-### Dialogflow Setup
-
+## Project Setup
 - In your Dialogflow project, go to the project settings (gear icon) > Export and Import, then "Import from ZIP".  From this project, upload `dialogflow-project/common-chatbot-export.zip`
 - If you want to hook this up on your own (or want to add new intents), continue the following steps.
 - On any intent, including the default welcome one, be sure an action name is assigned.
@@ -56,6 +54,11 @@ You can create your own custom-formatted response for each platform, but this te
 - The action names will correspond to the keys of the return object in responses/index.js.  The initial welcome and errors are a bit of an exception and you can see how that's being dealt with in utils/request-handler.js.
 - Also look at logs/original-incoming-dialogflow-data.json to see what is being processed.
 ![Dialogflow sample intent](media/instructions/instructions.jpg "Logo Title Text 1")
+
+# Webview Configuration
+
+- If you want to explicitly close or send messages from your webview, or access user profile data, you'll need to enter the accessToken and pageId in the package.json file.  Be sure to not check this in for security purposes.
+  - If you don't need this, don't enter those values in `package.json` and delete the majority of the Facebook section in `webview.js`.
 
 # Contributing to Underlying common-chatbot Framework
 

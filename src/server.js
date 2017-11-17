@@ -6,66 +6,95 @@ const outboundRequest = require('request');
 const expressServer = express();
 expressServer.use(bodyParser.json());
 
-import {getResponseObjectForDialogflow, setUserProfile} from 'common-chatbot';
-import handleRequest from './utils/request-handler';
+import {getDialogflowResponseObject, getGoogleResponseObject, getFacebookResponseArray, setUserProfileObject} from 'common-chatbot';
+import getCommonChatbotResponseObject from './utils/request-handler';
 import logJsonToFile from './utils/log-json-to-file';
 
 const facebookAccessToken = JSON.parse(fs.readFileSync(`${__dirname.split('dist')[0]}package.json`)).appSettings.facebook.accessToken;
 
 expressServer.get('/', function (request, response) {
     response.end(JSON.stringify({
+        message: 'It works! But you should send posts to /dialogflow or /facebook.'
+    }));
+});
+
+expressServer.get('/dialogflow', function (request, response) {
+    console.log('hi')
+    response.end(JSON.stringify({
         message: 'It works!  But this service is meant for HTTP posts for Dialogflow.'
     }));
 });
 
-expressServer.post('/', function (request, response) {
+expressServer.post('/dialogflow', function (request, response) {
 
-    const originalIncomingObjectFromDialogflow = request.body;
+    const dialogflowIncomingObject = request.body;
 
     // useful for seeing what comes back from Dialogflow
-    logJsonToFile('original-incoming-dialogflow-data', originalIncomingObjectFromDialogflow);
+    logJsonToFile('dialogflow-incoming-object-log', dialogflowIncomingObject);
 
-    const config = {
+    const profileConfigObject = {
         facebookAccessToken: facebookAccessToken
     };
 
-    // setUserProfile(originalIncomingObjectFromDialogflow, config).then(() => {
-        const customResponseObject = handleRequest(originalIncomingObjectFromDialogflow);
-        response.end(JSON.stringify(getResponseObjectForDialogflow(customResponseObject, originalIncomingObjectFromDialogflow)));
+    // setUserProfileObject(dialogflowIncomingObject, profileConfigObject).then(() => {
+        const commonChatbotResponseObject = getCommonChatbotResponseObject({
+            source: 'dialogflow',
+            data: dialogflowIncomingObject
+        });
+        response.end(JSON.stringify(getDialogflowResponseObject(commonChatbotResponseObject, dialogflowIncomingObject)));
     // });
 });
 
 expressServer.post('/facebook', function (request, response) {
 
+    // even if you respond below in the outbound request
+    // Facebook needs to know you got the original post
     response.status(200).send('EVENT_RECEIVED');
 
-    let webhookEvent = request.body.entry[0].messaging[0];
+    let webhookEventObject = request.body.entry[0].messaging[0];
 
-    console.log('post');
+    console.log('Facebook POST');
 
-    if (webhookEvent.message) {
-        logJsonToFile('original-incoming-facebook-data', request.body);
-        let responseBody = {
-            recipient: { id: webhookEvent.sender.id },
-            message: { text: `You said: ${webhookEvent.message.text}` }
-        };
-        outboundRequest({
-            // url: `https://graph.facebook.com/v2.6/me/messages?access_token=${facebookAccessToken}`,
-            url: 'https://graph.facebook.com/v2.6/me/messages',
-            qs: {
-                access_token: 'EAABtUCCdPnMBANOabFxzvEQXNjudwIu4UOK6UmveVESZBWymZAr0EfFH9JtVSunG0HeVFgsv5sTWZCYF3bZBnpIemuYVwq5R5OiNUgjp0BhUfdqcEqYEbJxaiJ7c3F3jsCe3hM2gEdmV2BYVwqwrZBtEln1PV8BVA9mn0G34ghQZDZD'
-            },
-            method: 'POST',
-            headers: [{ name: 'content-type', value: 'application/json' }],
-            json: responseBody
-        }, function (error, outboundResponse, outboundBody) {
-            if (outboundBody && outboundBody.message_id) {
-                console.log('success');
-            } else {
-                console.log('fail');
-            }
+    if (webhookEventObject.message) {
+
+        const facebookIncomingObject = request.body;
+        logJsonToFile('facebook-incoming-object-log', facebookIncomingObject);
+
+        const commonChatbotResponseObject = getCommonChatbotResponseObject({
+            source: 'facebook',
+            data: facebookIncomingObject
         });
-    } else if (webhookEvent.postback) {
+        logJsonToFile('common-chatbot-abstracted-response-object-log', commonChatbotResponseObject);
+        const facebookResponseArray = getFacebookResponseArray(commonChatbotResponseObject);
+        console.log(facebookResponseArray);
+        logJsonToFile('facebook-response-array-log', facebookResponseArray);
+
+        facebookResponseArray.forEach((message, index) => {
+
+            let responseBodyObject = {
+                recipient: { id: webhookEventObject.sender.id },
+                message: message
+            };
+
+            outboundRequest({
+                url: 'https://graph.facebook.com/v2.6/me/messages',
+                qs: {
+                    access_token: facebookAccessToken
+                },
+                method: 'POST',
+                headers: [{ name: 'content-type', value: 'application/json' }],
+                json: responseBodyObject
+            }, function (error, outboundResponseObject, outboundBodyObject) {
+                // console.log(outboundBodyObject);
+                if (outboundBodyObject && outboundBodyObject.message_id) {
+                    console.log('success');
+                } else {
+                    console.log('fail');
+                }
+            });
+
+        });
+    } else if (webhookEventObject.postback) {
         console.log('postback');
     }
 });
@@ -75,11 +104,13 @@ expressServer.get('/facebook', function (request, response) {
     let mode = request.query['hub.mode'];
     let token = request.query['hub.verify_token'];
 
+    // console.log(request);
+
     if (true !== true) {
     // if (token !== facebookAccessToken) {
         response.sendStatus(403);
     } else {
-        // what Facebook uses to verify the webhook
+        // Facebook uses this to verify that your webhook exists
         if (mode === 'subscribe') {
             let challenge = request.query['hub.challenge'];
             response.status(200).send(challenge);
