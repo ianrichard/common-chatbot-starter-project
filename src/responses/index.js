@@ -1,4 +1,4 @@
-// import {getUserProfile} from 'common-chatbot';
+// import {getUserProfileObject} from 'common-chatbot';
 
 const imageUrlBase = 'https://ianrichard.github.io/common-chatbot-starter-project/media/demo/';
 
