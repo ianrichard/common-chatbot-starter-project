@@ -1,20 +1,19 @@
-const { spawn } = require('child_process');
+const {spawn} = require('child_process');
+const fs = require('fs');
 
 function runShellCommand(shellCommandName, shellCommandArgs, logLabel) {
-    const shellCommand = spawn(shellCommandName, shellCommandArgs);
-    shellCommand.stdout.on('data', function(data) {
-        console.log(`Begin ${logLabel} Log --------------------`);
-        console.log(data.toString().trim());
-        console.log(`End ${logLabel} Log --------------------\n`);
-    });
-    return shellCommand;
+    spawn(shellCommandName, shellCommandArgs, {stdio: 'inherit', shell: true});
 }
 
-// assigning to variables in case you want to do something with the processes
-const projectBabelProcess = runShellCommand('babel', ['src', '-d', 'dist', '--copy-files', '-w', '-s'], 'Project Babel');
-const commonChatbotBabelProcess = runShellCommand('babel', ['../common-chatbot/src', '-d', 'node_modules/common-chatbot/lib', '--copy-files', '-w', '-s'], 'Common Chatbot Module Babel');
-const serverWithNodemonProcess = runShellCommand('nodemon', ['dist/server.js'], 'Server');
-const localtunnelProcess = runShellCommand('lt', ['--subdomain', 'yoursubdomain', '--port', '8080'], 'Localtunnel');
+// if you want to work on the underlying common-chatbot module, clone it as a sibling to this project
+// this script will automatically build on updates and put in your node_modules
+if (fs.existsSync('../common-chatbot')) {
+    runShellCommand('babel', ['../common-chatbot/src', '-d', 'node_modules/common-chatbot/lib', '--copy-files', '-w', '-s']);
+};
+
+runShellCommand('babel', ['src', '-d', 'dist', '--copy-files', '-w', '-s']);
+runShellCommand('nodemon', ['dist/server.js']);
+runShellCommand('lt', ['--subdomain', 'yoursubdomain', '--port', '8080']);
 
 // catches ctrl+c event
 process.on('SIGINT', function(options, error) {
