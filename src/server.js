@@ -19,7 +19,6 @@ expressServer.get('/', function (request, response) {
 });
 
 expressServer.get('/dialogflow', function (request, response) {
-    console.log('hi')
     response.end(JSON.stringify({
         message: 'It works!  But this service is meant for HTTP posts for Dialogflow.'
     }));
@@ -129,4 +128,4 @@ const PORT = process.env.PORT || '8080';
 
 expressServer.listen(PORT, function () {
     console.log(`Load http://localhost:${PORT}/ in your web browser for local development.`);
-})
+});
